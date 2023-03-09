@@ -1,0 +1,81 @@
+val namesStr = "tomasz, t, bogdan, anna, Jerzy, j, maria"
+val formStr = namesStr
+               .split(",[ ]+")
+               .filter(_.length > 1)
+               .map(_.capitalize)
+               .reduce(_ + "," + _)
+
+
+1) dzielimy jeden długi string na osobne "słowa" rozdzielając ",[ ]+"
+2) usuwamy słowa krótsze niż 2 znaki
+3) Zmieniamy pierwsze znaki na wilekie litery
+4) łączymy osobne strigni w jeden długi string oddzielone przecinkami
+
+
+val numOfDiffLetters = List("Trzynastu", "musi", "pójść")
+                        .mkString
+                        .toLowerCase
+                        .toSet
+                        .size
+
+
+1) tworzymy jeden długi string
+2) ustawiamy wszystkie znaki na małe litery
+3) towrzymy set(zbiór) wszystkich liter(usuwamy duplikaty)
+4) sprawdzamy długość
+
+
+
+
+val prodPrices = Map("A" -> 100, "B" -> 500, "C" -> 1000)
+val products = List("A", "B", "C")
+val totalDiscount = products
+                      .filter(prodPrices(_) > 499)
+                      .map(e => { val pr = prodPrices(e)
+                                  if (pr > 999) pr * 0.3 else pr * 0.1 })
+                      .reduce(_ + _)
+
+
+
+1. odfiltrowujemy(pozbywamy się) wszystkich prodóktów, których cena jest mniejsza niż 500
+2. mapujemy przeceny na produkty w zależności od ich ceny
+3. sumujemy wszystkie wartości
+
+
+
+val lines = List("This is a line of text",
+               "And here the second line")
+val wordCound1 = lines
+                   .flatMap(_.split(" "))
+                   .map(_.toLowerCase)
+                   .foldLeft(0)((acc, e) => acc + 1)
+
+val wordCound2 = lines
+                   .flatMap(_.split(""))
+                   .map(_.toLowerCase)
+                   .toSet.foldLeft(0)((acc, e) => acc + 1)
+
+
+1) rozdzielamy string na osobne słowa
+2) mapujemy na małe znaki
+3) zliczamy wszystkie słowa
+
+1) rozdzielamy stringi na osobne znaki
+2) mapujemy na małe znaki
+3) wrzucamy wszystkie znaki do zbioru(usuwając duplikaty)
+4) zliczamy wszystkie znaki
+
+w pierwszym liczymy słowa w drugim unikalne znaki, stąd róznica wyników
+
+
+val lines = List("This is a line of text",
+               "And here the second line")
+val wordCound1 = ( 0 /: lines
+                   .flatMap(_.split(" "))
+                   .map(_.toLowerCase)
+                   .toList)((acc, e) => acc + 1)
+
+val wordCound2 = ( 0 /: lines
+                   .flatMap(_.split(""))
+                   .map(_.toLowerCase)
+                   .toSet.toList)((acc, e) => acc + 1)
